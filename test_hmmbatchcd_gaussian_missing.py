@@ -68,7 +68,7 @@ def test_global_update():
                            sigma=np.eye(3),
                            mu_0=np.zeros(2),
                            sigma_0=np.eye(2),
-                           kappa_0=1., nu_0=1) for i in xrange(2)]
+                           kappa_0=0.01, nu_0=4) for i in xrange(2)]
 
     init_init = np.random.rand(K)
     init_init /= np.sum(init_init)
@@ -146,14 +146,14 @@ def test_local_global():
                      kappa_0=100,
                      nu_0=100)
     # set mu_0 near the actual mu_2?
-    emit2 = Gaussian(mu=np.ones(2) * 5,
+    emit2 = Gaussian(mu=np.ones(2) * 10,
                      sigma=np.eye(2),
-                     mu_0=np.ones(2) * 5,
+                     mu_0=np.ones(2) * 10,
                      sigma_0=np.eye(2),
                      kappa_0=100,
                      nu_0=100)
     emit = np.array([emit1, emit2])
-    #obs, sts = gen_synthetic.generate_data(tran, emit, 10)
+    #obs, sts, _ = gen_synthetic.generate_data(tran, emit, 10)
     nobs = 100
     sts = np.zeros(nobs)
     sts[(nobs//2):] = 1
@@ -163,8 +163,8 @@ def test_local_global():
 
     mu_0 = np.zeros(2)
     sigma_0 = 50 * np.eye(2)
-    kappa_0 = 1
-    nu_0 = 2
+    kappa_0 = 0.01
+    nu_0 = 4
 
     prior_emit = [Gaussian(mu_0=mu_0, sigma_0=sigma_0,
                      kappa_0=kappa_0, nu_0=nu_0) for i in xrange(len(emit))]
@@ -172,7 +172,7 @@ def test_local_global():
     prior_tran = np.array([[1, 1], [1, 1]])
     prior_init = np.ones(2)
 
-    hmm = HMM.VBHMM(np.array(obs), prior_init, prior_tran, prior_emit)
+    hmm = HMM.VBHMM(obs, prior_init, prior_tran, prior_emit)
     hmm.infer()
 
     print "=============EMIT 0 MF FIELDS"
@@ -332,7 +332,8 @@ def test_local_global_hard():
 if __name__ == "__main__":
 
     #test_global_update()
-    test_local_update()
-    #hmm, sts, obs = test_local_global()
+    #test_local_update()
+    #test_local_global()
+    hmm, sts, obs = test_local_global()
     #test_prior_strength()
     #hmm = test_local_global_hard()
