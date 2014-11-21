@@ -75,7 +75,7 @@ def test_global_update():
     init_tran = np.random.rand(K,K)
     init_tran /= np.sum(init_tran, axis=1)[:,np.newaxis]
 
-    hmm = HMM.VBHMM(np.array(obs), prior_init, prior_tran, prior_emit,
+    hmm = HMM.VBHMM(obs, prior_init, prior_tran, prior_emit,
             init_init=init_init, init_tran=init_tran)
     #hmm.var_q = gen_synthetic.generate_q(sts)
 
@@ -122,15 +122,15 @@ def test_local_update():
                      kappa_0=100,
                      nu_0=100)
     emit = np.array([emit1, emit2])
-    obs, sts = gen_synthetic.generate_data(tran, emit, 100)
+    obs, sts, _ = gen_synthetic.generate_data(tran, emit, 100)
 
     priors_emit = np.array([emit1, emit2])
     priors_tran = np.array([[9, 1], [1, 9]])
     prior_init = np.ones(2)
-    hmm = HMM.VBMM(prior_init, priors_tran, priors_emit, np.array(obs))
+    hmm = HMM.VBHMM(obs, prior_init, priors_tran, priors_emit)
     hmm.infer()
 
-    plot_MAP(hmm.var_q, obs)
+    plot_MAP(hmm.var_x, obs)
 
 def test_local_global():
     # Local and Global update test
@@ -172,7 +172,7 @@ def test_local_global():
     prior_tran = np.array([[1, 1], [1, 1]])
     prior_init = np.ones(2)
 
-    hmm = HMM.VBHMM(prior_init, prior_tran, prior_emit, obs)
+    hmm = HMM.VBHMM(np.array(obs), prior_init, prior_tran, prior_emit)
     hmm.infer()
 
     print "=============EMIT 0 MF FIELDS"
@@ -331,8 +331,8 @@ def test_local_global_hard():
 
 if __name__ == "__main__":
 
-    test_global_update()
-    #test_local_update()
+    #test_global_update()
+    test_local_update()
     #hmm, sts, obs = test_local_global()
     #test_prior_strength()
     #hmm = test_local_global_hard()
