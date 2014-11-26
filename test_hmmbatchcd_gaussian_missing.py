@@ -220,7 +220,7 @@ def test_prior_strength():
                      kappa_0=100,
                      nu_0=100)
     emit = np.array([emit1, emit2])
-    obs, sts = gen_synthetic.generate_data(tran, emit, 100)
+    obs, sts, _ = gen_synthetic.generate_data(tran, emit, 100)
 
     prior_init = np.ones(2)
     prior_tran = np.ones((2,2))
@@ -230,11 +230,10 @@ def test_prior_strength():
 
     prior_emit = [Gaussian(mu_0=obs_mean.copy(),
                            sigma_0=0.75*np.diag(obs_var.copy()),
-                           kappa_0=1, nu_0=1) for k in xrange(2)]
+                           kappa_0=0.01, nu_0=4) for k in xrange(2)]
     prior_emit = np.array(prior_emit)
 
-    hmm = HMM.VBHMM(prior_init, prior_tran, prior_emit,
-                         np.array(obs))
+    hmm = HMM.VBHMM(obs, prior_init, prior_tran, prior_emit)
     hmm.infer()
 
     print "=============EMIT 0 FIELDS"
@@ -242,12 +241,12 @@ def test_prior_strength():
     print "=============EMIT 1 FIELDS"
     print hmm.var_emit[1]
 
-    var_q = hmm.var_q.copy()
-    if mistake_rate(sts, var_q) > 0.5:
-        var_q = np.dstack((var_q[:,1], var_q[:,0]))[0]
+    var_x = hmm.var_x.copy()
+    if mistake_rate(sts, var_x) > 0.5:
+        var_x = np.dstack((var_x[:,1], var_x[:,0]))[0]
 
-    print "mistake rate = ", mistake_rate(sts, var_q)
-    plot_var_q(var_q, sts)
+    print "mistake rate = ", mistake_rate(sts, var_x)
+    plot_var_q(var_x, sts)
 
 def test_local_global_hard():
     # Tests the Local and Global Update on Difficult Data
@@ -334,6 +333,6 @@ if __name__ == "__main__":
     #test_global_update()
     #test_local_update()
     #test_local_global()
-    hmm, sts, obs = test_local_global()
+    #hmm, sts, obs = test_local_global()
     #test_prior_strength()
-    #hmm = test_local_global_hard()
+    hmm = test_local_global_hard()
