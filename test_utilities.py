@@ -59,4 +59,31 @@ def plot_var_q(var_q, sts):
     plt.ylabel('Probability of True State')
     plt.show()
 
+# These just generate random parameters for dirichlet {
+def generate_rand_init(N):
+    # Generate Random Parameters
+    init = np.random.randint(1, 10, N)
+    return init
+
+def generate_rand_tran(N):
+    tran = np.random.randint(1, 10, N)
+    for i in xrange(N - 1):
+        tmp = np.random.randint(1, 10, N)
+        tran = np.vstack((tran, tmp))
+
+    return tran
+# }
+
+def generate_rand_mu(lo, hi, dim, n):
+    return [np.random.randint(lo, hi, dim) for i in xrange(n)]
+
+def generate_rand_sig(lmbda, dof, n):
+    # lmbda : The scale matrix, if we're generating an N x N covariance matrix
+    #         this must be an N x N matrix.
+    #
+    # dof : degrees of freedom
+    #
+    # n : The number of covariance matrices to generate
+    return [stats.sample_invwishart(lmbda, dof) for i in xrange(n)]
+
 
