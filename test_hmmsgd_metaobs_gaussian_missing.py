@@ -161,28 +161,28 @@ def bridge_10state():
 #                    [  0.,   0.,  0., 0.,   0.,   0.,  0., 1.],  # 7
 #                    [  1.,   0.,  0., 0.,   0.,   0.,  0., 0.]]) # 8
 
-##    A_true = np.zeros((10,10))
-##    A_true[0, [0,1,2]] = [0.4975, 0.4975, 0.005]
-##    A_true[1, [0,1,2]] = [0.4975, 0.4975, 0.005]
-##    A_true[2, [2,3]] = [0.95, 0.05]
-##    A_true[3, [3,4]] = [0.95, 0.05]
-##    A_true[4, [4,5,6]] = [0.75, 0.125, 0.125]
-##    A_true[5, [5,6,7]] = [0.4975, 0.4975, 0.005]
-##    A_true[6, [5,6,7]] = [0.4975, 0.4975, 0.005]
-##    A_true[7, [7,8]] = [0.95, 0.05]
-##    A_true[8, [8,9]] = [0.95, 0.05]
-##    A_true[9, [0,1,9]] = [0.125, 0.125, 0.75]
+#    A_true = np.zeros((10,10))
+#    A_true[0, [0,1,2]] = [0.4975, 0.4975, 0.005]
+#    A_true[1, [0,1,2]] = [0.4975, 0.4975, 0.005]
+#    A_true[2, [2,3]] = [0.95, 0.05]
+#    A_true[3, [3,4]] = [0.95, 0.05]
+#    A_true[4, [4,5,6]] = [0.75, 0.125, 0.125]
+#    A_true[5, [5,6,7]] = [0.4975, 0.4975, 0.005]
+#    A_true[6, [5,6,7]] = [0.4975, 0.4975, 0.005]
+#    A_true[7, [7,8]] = [0.95, 0.05]
+#    A_true[8, [8,9]] = [0.95, 0.05]
+#    A_true[9, [0,1,9]] = [0.125, 0.125, 0.75]
 
 
-    mu_true = np.array([[0, 20],      # 1
-                        [20, 0],      # 2
+    mu_true = np.array([[0, 20],     # 1
+                        [20, 0],     # 2
                         [-30, -30],  # 3
                         [30, -30],   # 4
                         [0, 50],     # 5
-                        [-20, 0],     # 6
-                        [0, -20],     # 7
+                        [-20, 0],    # 6
+                        [0, -20],    # 7
                         [30, 30],    # 8
-                        [-30, 30],    # 9
+                        [-30, 30],   # 9
                         [0, -50]     # 10
                         ], dtype='float64')
 
@@ -329,15 +329,15 @@ def bridge_10state():
 
 def reversed_cycles():
 
-                   #   1     2   3     4     5     6    7   8
-    A_true = np.array([[ .01,  .99,   0.,  0.,   0.,   0.,  0., 0.],  # 1
-                    [  0.,  .01, 0.99,  0.,   0.,   0.,  0., 0.],  # 2
-                    [  .85,   0.,   0., 0.15,   0.,   0.,  0., 0.],  # 3 can find the bridge to 4
-                    [  0.,   0.,   0.,  0.,   1.,   0.,  0., 0.],  # 4 #must go to other component via 5
-                    [  0.,   0.,   0.,  0., 0.01,  .99,  0., 0.],  # 5
-                    [  0.,   0.,   0.,  0.,   0.,  .01, .99, 0.],  # 5
-                    [  0.,   0.,   0.,  0.,   0.85,  0.,  0., .15],  # 7 can find bridge to 8
-                    [  1.,   0.,   0.,  0.,   0.,   0.,  0., 0.]]) # 8 #must go to other component via 1
+                       #   1     2    3     4     5     6    7     8
+    A_true = np.array([[0.01, 0.99,   0.,   0.,   0.,   0.,  0.,   0.],  # 1
+                       [  0., 0.01, 0.99,   0.,   0.,   0.,  0.,   0.],  # 2
+                       [0.85,   0.,   0., 0.15,   0.,   0.,  0.,   0.],  # 3 can find the bridge to 4
+                       [  0.,   0.,   0.,   0.,   1.,   0.,  0.,   0.],  # 4 #must go to other component via 5
+                       [  0.,   0.,   0.,   0., 0.01,  .99,  0.,   0.],  # 5
+                       [  0.,   0.,   0.,   0.,   0.,  .01, .99,   0.],  # 5
+                       [  0.,   0.,   0.,   0., 0.85,   0.,  0., 0.15],  # 7 can find bridge to 8
+                       [  1.,   0.,   0.,   0.,   0.,   0.,  0.,   0.]]) # 8 #must go to other component via 1
     #we may also experiment with longer cycles but the same structure: this is the simplest/minimal implementation
 
 
@@ -523,13 +523,6 @@ def plot_state_sq(sts):
 if __name__ == "__main__":
 
     #np.random.seed(8675309)
-    #hmm, full_var_x, sts, obs = test3()
-    #hmm, full_var_x, obs, sts, priors = test_one_state()
-    #hmm, full_var_x, obs, sts, priors = test_one_group()
-    #hmm, full_var_x, obs, sts, priors = test_two_groups()
-    #hmm, full_var_x, obs, sts, priors = test_long_memory()
-    #hmm, full_var_x, obs, sts, priors = test_short_memory()
-    #hmm, full_var_x, obs, sts, priors = test_local_global_hard()
-    #hmm, full_var_x, obs, sts, priors = bridge_10state()
-    hmm, full_var_x, obs, sts, priors = reversed_cycles()
+    hmm, full_var_x, obs, sts, priors = bridge_10state()
+    #hmm, full_var_x, obs, sts, priors = reversed_cycles()
 
