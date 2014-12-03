@@ -1,7 +1,6 @@
 from __future__ import division
 
 import os
-import itertools
 import glob
 import numpy as np
 

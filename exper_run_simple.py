@@ -157,7 +157,7 @@ def main(name, datadir, datafn, K, expdir=None, nfolds=1, nrestarts=1, seed=None
 
     # Create ExperimentSequential and call run_exper
     dname = os.path.join(datadir, datafn + "_data.txt")
-    exp = ExpSeq('exper_synth_4statedd', dname, run_exper, par_list,
+    exp = ExpSeq(name, dname, run_exper, par_list,
                  masks=masks, exper_dir=expdir)
     exp.run()
 
