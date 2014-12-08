@@ -52,11 +52,10 @@ def test_hmmbatchcd():
     hmm.infer()
 
     sts_true = np.array([int(np.round(i/N)) for i in xrange(N)])
-    sts_pred = np.argmax(hmm.var_x, axis=1)
-    match_perm = munkres_match(sts_true, sts_pred, K)
-    sts_pred = match_perm[sts_pred]
-    print 'Hamming Distance = ', hd(sts_pred, sts_true)
+    # hamming distance
+    print 'Hamming Distance = ', hmm.hamming_dist(hmm.var_x, sts_true)[0]
 
+    # plot learned emissions over observations
     plt.figure()
     plt.scatter(obs[:,0], obs[:,1])
     for G in prior_emit:
@@ -64,6 +63,10 @@ def test_hmmbatchcd():
     for G in hmm.var_emit:
         plt.scatter(*G.mu_mf, color='red')
         util.plot_ellipse(G.mu_mf, G.sigma, edge='r', face='none')
+    plt.show()
+
+    # plot elbo over iterations
+    plt.plot(hmm.elbo_vec)
     plt.show()
 
     
