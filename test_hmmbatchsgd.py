@@ -57,13 +57,7 @@ def test_hmmbatchsgd():
     print 'Hamming Distance = ', hmm.hamming_dist(hmm.var_x, sts_true)[0]
 
     # plot learned emissions over observations
-    plt.figure()
-    plt.scatter(obs[:,0], obs[:,1])
-    for G in prior_emit:
-        plt.scatter(*G.mu_mf, color='green')
-    for G in hmm.var_emit:
-        plt.scatter(*G.mu_mf, color='red')
-        util.plot_ellipse(G.mu_mf, G.sigma, edge='r', face='none')
+    util.plot_emissions(obs, prior_emit, hmm.var_emit)
     plt.show()
 
     # plot elbo over iterations

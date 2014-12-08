@@ -128,6 +128,22 @@ def plot_ellipse(pos, P, edge='k', face='none'):
         pass
 
 
+def plot_emissions(obs, prior_emit, var_emit):
+    # Written this way so that util compiles on the cluster
+    try:
+        import matplotlib.pyplot as plt
+        plt.figure()
+        plt.scatter(obs[:,0], obs[:,1])
+        for G in prior_emit:
+            plt.scatter(*G.mu_mf, color='green')
+        for G in var_emit:
+            plt.scatter(*G.mu_mf, color='red')
+            plot_ellipse(G.mu_mf, G.sigma, edge='r', face='none')
+
+    except ImportError:
+        pass
+
+
 def mvnrand(mean, cov, size=1):
     """ Simulate samples from multivariate normal.
 
