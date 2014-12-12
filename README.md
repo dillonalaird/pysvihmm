@@ -25,7 +25,7 @@ Contents
   in a meta-observation, and then those are averaged over all meta-observations
   in the minibatch.
 
-`hmm_fast.py` :
+`hmm_fast.pyx` : A fast implemenation of forward filtering backward sampling.
 
 ### Test Classes
 
