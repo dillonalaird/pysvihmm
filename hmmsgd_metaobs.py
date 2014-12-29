@@ -710,7 +710,7 @@ class VBHMM(VariationalHMMBase):
 
     def get_forward(self, metaobs, lliks, mod_tran, mod_init):
         """ Creates an alpha table (matrix) where
-            alpha_table[i,j] = alpha_{i}(z_{i} = j) = P(z_{i} = j, x_{1:i}).
+            alpha_table[i,j] = alpha_{i}(z_{i} = j) = P(z_{i} = j | x_{1:i}).
             This also creates the scales stored in c_table. Here we're looking
             at the probability of being in state j and time i, and having
             observed the partial observation sequence form time 1 to i.
@@ -741,7 +741,7 @@ class VBHMM(VariationalHMMBase):
 
     def get_backward(self, metaobs, lliks, mod_tran):
         """ Creates a beta table (matrix) where
-            beta_table[i][j] = beta_{i}(z_{i} = j) = P(x_{i+1:T} | z_{t} = j).
+            beta_table[i,j] = beta_{i}(z_{i} = j) = P(x_{i+1:T} | z_{t} = j).
             This also scales the probabilies. Here we're looking at the
             probability of observing the partial observation sequence from time
             i+1 to T given that we're in state j at time t.
@@ -774,7 +774,7 @@ class VBHMM(VariationalHMMBase):
 
     def forward_msgs(self, metaobs=None):
         """ Creates an alpha table (matrix) where
-            alpha_table[i,j] = alpha_{i}(z_{i} = j) = P(z_{i} = j, x_{1:i}).
+            alpha_table[i,j] = alpha_{i}(z_{i} = j) = P(z_{i} = j | x_{1:i}).
             This also creates the scales stored in c_table. Here we're looking
             at the probability of being in state j and time i, and having
             observed the partial observation sequence form time 1 to i.
@@ -827,7 +827,7 @@ class VBHMM(VariationalHMMBase):
 
     def backward_msgs(self, metaobs=None):
         """ Creates a beta table (matrix) where
-            beta_table[i][j] = beta_{i}(z_{i} = j) = P(x_{i+1:T} | z_{t} = j).
+            beta_table[i,j] = beta_{i}(z_{i} = j) = P(x_{i+1:T} | z_{t} = j).
             This also scales the probabilies. Here we're looking at the
             probability of observing the partial observation sequence from time
             i+1 to T given that we're in state j at time t.
