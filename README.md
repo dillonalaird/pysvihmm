@@ -43,3 +43,10 @@ Contents
 Cython Modules
 --------------
 Run `python setup.py build_ext --inplace` to build external Cython modules.
+
+Authors
+-------
+
+Nick Foti
+Jason Xu
+Dillon Laird
