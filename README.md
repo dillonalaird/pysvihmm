@@ -44,6 +44,10 @@ Cython Modules
 --------------
 Run `python setup.py build_ext --inplace` to build external Cython modules.
 
+Extensions
+----------
+A C++ version can be found [here](https://github.com/dillonalaird/pyhmm)
+
 Authors
 -------
 
